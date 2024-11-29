@@ -5,7 +5,7 @@ let offsetY = 0;
 let snowflakes = []; // Array for snowflakes
 
 function setup() {
-  createCanvas(windowWidth, windowHeight); // Responsive canvas size
+  createCanvas(1024,1024); // Responsive canvas size
   noStroke();
 
   // Create initial snowflakes
