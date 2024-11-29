@@ -5,24 +5,24 @@ let offsetY = 0;
 let snowflakes = []; // Array for snowflakes
 
 function setup() {
-  createCanvas(1024, 1024); // Set the canvas size to 1024x1024
+  createCanvas(windowWidth, windowHeight); // Responsive canvas size
   noStroke();
 
   // Create initial snowflakes
-  for (let i = 0; i < 200; i++) { // Increase number of snowflakes for a bigger canvas
+  for (let i = 0; i < 100; i++) { // Decreased snowflakes for smaller screens
     snowflakes.push(new Snowflake());
   }
 
   // Add snowman parts
-  snowmanParts.push(new SnowmanPart('Eye', 50, 70, 10, color(0))); // Eye
-  snowmanParts.push(new SnowmanPart('Eye', 80, 70, 10, color(0))); // Eye
-  snowmanParts.push(new SnowmanPart('Nose', 65, 110, 20, color(255, 165, 0))); // Nose
-  snowmanParts.push(new SnowmanPart('Button', 50, 170, 15, color(0))); // Button
-  snowmanParts.push(new SnowmanPart('Button', 80, 200, 15, color(0))); // Button
+  snowmanParts.push(new SnowmanPart('Eye', 50, 50, 10, color(0))); // Eye
+  snowmanParts.push(new SnowmanPart('Eye', 80, 50, 10, color(0))); // Eye
+  snowmanParts.push(new SnowmanPart('Nose', 65, 90, 20, color(255, 165, 0))); // Nose
+  snowmanParts.push(new SnowmanPart('Button', 50, 150, 15, color(0))); // Button
+  snowmanParts.push(new SnowmanPart('Button', 80, 180, 15, color(0))); // Button
   snowmanParts.push(new SnowmanPart('Arm', 30, 230, 50, color(139, 69, 19))); // Left arm
   snowmanParts.push(new SnowmanPart('Arm', 120, 230, 50, color(139, 69, 19))); // Right arm
-  snowmanParts.push(new SnowmanPart('Hat', 70, 50, 40, color(0))); // Hat
-  snowmanParts.push(new SnowmanPart('Scarf', 100, 120, 60, color(200, 0, 0))); // Scarf
+  snowmanParts.push(new SnowmanPart('Hat', 70, 20, 40, color(0))); // Hat
+  snowmanParts.push(new SnowmanPart('Scarf', 100, 100, 60, color(200, 0, 0))); // Scarf
 }
 
 function draw() {
@@ -30,7 +30,7 @@ function draw() {
 
   // Draw ground
   fill(240);
-  rect(0, 900, width, 124); // Adjust the ground to fit the larger canvas
+  rect(0, height - 100, width, 100); // Adjust the ground to fit mobile screens
 
   // Draw snowflakes
   for (let flake of snowflakes) {
@@ -40,9 +40,9 @@ function draw() {
 
   // Draw snowman body
   fill(255);
-  ellipse(512, 700, 300, 300); // Base (centered)
-  ellipse(512, 490, 200, 200); // Middle
-  ellipse(512, 335, 140, 140); // Head
+  ellipse(width / 2, height - 300, 200, 200); // Base (centered)
+  ellipse(width / 2, height - 450, 150, 150); // Middle
+  ellipse(width / 2, height - 575, 100, 100); // Head
 
   // Draw all parts
   for (let part of snowmanParts) {
@@ -54,7 +54,7 @@ function draw() {
   drawExplanationBox();
 }
 
-function mousePressed() {
+function touchStarted() {
   for (let part of snowmanParts) {
     if (part.isHovered(mouseX, mouseY)) {
       selectedPart = part;
@@ -65,14 +65,14 @@ function mousePressed() {
   }
 }
 
-function mouseDragged() {
+function touchMoved() {
   if (selectedPart) {
     selectedPart.x = mouseX - offsetX;
     selectedPart.y = mouseY - offsetY;
   }
 }
 
-function mouseReleased() {
+function touchEnded() {
   selectedPart = null;
 }
 
@@ -103,19 +103,20 @@ function keyPressed() {
 function drawExplanationBox() {
   // Background for the explanation box
   fill(255, 255, 255, 200);
-  rect(20, height - 150, width - 40, 120, 10);
+  rect(20, height - 220, width - 40, 120, 10);
 
   // Text content for the explanation
   fill(0);
   textSize(16);
   textAlign(LEFT, TOP);
   text(
-    "Welcome to Snowman Creator! \n\n" +
-    "- Drag and drop parts to position them.\n" +
-    "- Use UP/DOWN arrows to resize selected parts.\n" +
-    "- Use LEFT/RIGHT arrows to rotate parts (arms, nose, hat, scarf).\n" +
-    "- Have fun creating your snowman!\n", 
-    30, height - 140
+    "Velkommen til Sneemanden, så fin,\n" +
+    "Træk dele og gør den din!\n\n" +
+    "- Brug op/ned pile for at ændre størrelse.\n" +
+    "- Brug venstre/højre pile for at rotere skovlen.\n" +
+    "- Skab din drømme-sneemand.\n" +
+    "- Er det sjovt? Ja, det er vi enige om!\n", 
+    30, height - 200
   );
 }
 
